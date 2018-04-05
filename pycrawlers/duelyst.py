@@ -58,14 +58,24 @@ def compile_into_string(paragraphs=[]):
     return text.strip()
 
 
+def clean_string(text : str):
+    i = 0
+    while(i < len(text)):
+        if text[i] == ',' and text[i+1] != ' ':
+            text = text[:i+1] + ' ' + text[i+1:]
+        i += 1
+    return text
+
+
 def save_to_files(list):
     for i in range(len(list)):
-        file = open('part' + str(i) + '.txt', 'w')
+        file = open('resources/duelyst/part' + str(i) + '.txt', 'w')
         file.write(str(list[i]))
         file.close()
 
 
 text_list = fill_list('https://duelyst.gamepedia.com/Game_Lore')
 full_text = compile_into_string(text_list)
+full_text = clean_string(full_text)
 part_list = separate_sentences(full_text, 2)
 save_to_files(part_list)

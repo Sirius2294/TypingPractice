@@ -7,10 +7,12 @@ import java.awt.event.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-public class TypingPanel extends JPanel{
+public class TypingPanel extends Panel{
 	
 	private Thread textUpdater;
 	private Object lock;
+	
+	private String currentText;
 	
 	private TextManager manager;
 	private JTextArea textDisplayArea;
@@ -25,6 +27,7 @@ public class TypingPanel extends JPanel{
 	private final Highlighter.HighlightPainter redHighlighter;
 	private final Font typingFont;
 	private final Font readingFont;
+	private final Color defaultColor;
 	
 	private long startTime;
 	private long typingTime;
@@ -45,6 +48,8 @@ public class TypingPanel extends JPanel{
 		
 		greenHighlighter = new DefaultHighlighter.DefaultHighlightPainter(Color.GREEN);
 		redHighlighter = new DefaultHighlighter.DefaultHighlightPainter(Color.RED);
+		
+		defaultColor = textDisplayArea.getBackground();
 		
 		typingFld = new JTextField(10);
 		typingFld.setHorizontalAlignment(JTextField.CENTER);
@@ -82,13 +87,13 @@ public class TypingPanel extends JPanel{
 	private class NextListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent event) {
-			String text = manager.next();
+			currentText = manager.next();
 			
-			if(text.equals("end")) {
+			if(currentText.equals("end")) {
 				JOptionPane.showMessageDialog(null, "Congratulations, you completed this section.");
 			}
 			else {
-				textDisplayArea.setText(text);
+				textDisplayArea.setText(currentText);
 				
 				typingFld.setText("");
 				startTime = System.currentTimeMillis();
@@ -96,13 +101,20 @@ public class TypingPanel extends JPanel{
 				textUpdater = new Thread(new TypingListener());
 				textUpdater.start();
 			}
+			
+			textDisplayArea.setBackground(defaultColor);
 		}
 	}
 	
 	private class MenuButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent event) {
-			textUpdater.interrupt();
+			try {
+				textUpdater.interrupt();
+			}
+			catch(NullPointerException e) {
+				//do nothing
+			}
 			Main.setFrame(new MenuPanel());
 		}
 	}
@@ -130,8 +142,8 @@ public class TypingPanel extends JPanel{
 							}
 							catch(BadLocationException e) {e.printStackTrace();}
 							
-							if(numCorrect == textDisplayArea.getText().length()) {
-								JOptionPane.showMessageDialog(null, "You have completed this text");
+							if(numCorrect == currentText.length()) {
+								textDisplayArea.setBackground(Color.GREEN);
 								break;
 							}
 						}
@@ -156,14 +168,24 @@ public class TypingPanel extends JPanel{
 			textDisplayArea.getHighlighter().removeAllHighlights();
 			
 			for(int x = 0; x < typingFld.getText().length(); x++) {
-				if(typingFld.getText().charAt(x) == textDisplayArea.getText().charAt(x) && ! error) {
-					textDisplayArea.getHighlighter().addHighlight(x, x+1, greenHighlighter);
+				try {
+					if(typingFld.getText().charAt(x) == textDisplayArea.getText().charAt(x) && ! error) {
+						textDisplayArea.getHighlighter().addHighlight(x, x+1, greenHighlighter);
+					}
+					else {
+						textDisplayArea.getHighlighter().addHighlight(x, x+1, redHighlighter);
+						error = true;
+					}
+				}
+				catch(StringIndexOutOfBoundsException e) {
+					textDisplayArea.setText(textDisplayArea.getText() + " ");
+					return updateHighlighting();
+				}
+			}
+			
+			for(int x = 0; x < typingFld.getText().length(); x++) {
+				if(x < currentText.length() && typingFld.getText().charAt(x) == currentText.charAt(x))
 					numCorrect++;
-				}
-				else {
-					textDisplayArea.getHighlighter().addHighlight(x, x+1, redHighlighter);
-					error = true;
-				}
 			}
 			
 			return numCorrect;
