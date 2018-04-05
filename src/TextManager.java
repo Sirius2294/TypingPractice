@@ -7,7 +7,7 @@ public class TextManager {
 	String folder;
 	
 	public TextManager(String folderName) {
-		part = 1;
+		part = 0;
 		folder = folderName;
 	}
 	

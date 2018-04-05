@@ -23,6 +23,8 @@ public class TypingPanel extends JPanel{
 	
 	private final Highlighter.HighlightPainter greenHighlighter;
 	private final Highlighter.HighlightPainter redHighlighter;
+	private final Font typingFont;
+	private final Font readingFont;
 	
 	private long startTime;
 	private long typingTime;
@@ -32,30 +34,38 @@ public class TypingPanel extends JPanel{
 		
 		manager = new TextManager(section);
 		
+		typingFont = new Font("Sansserif", Font.PLAIN, 30);
+		readingFont = new Font("Sansserif", Font.PLAIN, 20);
+		
 		textDisplayArea = new JTextArea();
 		textDisplayArea.setLineWrap(true);
 		textDisplayArea.setWrapStyleWord(true);
 		textDisplayArea.setEditable(false);
-		textDisplayArea.setFont(new Font("Sansserif", Font.PLAIN, 20));
+		textDisplayArea.setFont(typingFont);
 		
 		greenHighlighter = new DefaultHighlighter.DefaultHighlightPainter(Color.GREEN);
 		redHighlighter = new DefaultHighlighter.DefaultHighlightPainter(Color.RED);
 		
 		typingFld = new JTextField(10);
 		typingFld.setHorizontalAlignment(JTextField.CENTER);
+		typingFld.setFont(readingFont);
 		NextListener nexter = new NextListener();
 		typingFld.addActionListener(nexter);
 		
 		menuBtn = new JButton("Menu");
+		menuBtn.setFont(readingFont);
 		menuBtn.addActionListener(new MenuButtonListener());
 		
 		lock = new Object();
 		
 		timeLbl = new JLabel("Time: 0 ms");
+		timeLbl.setFont(readingFont);
 		startTime = System.currentTimeMillis();
 		
 		cpmLbl = new JLabel("CPM: " + 0);
+		cpmLbl.setFont(readingFont);
 		wpmLbl = new JLabel("WPM: " + 0);
+		wpmLbl.setFont(readingFont);
 		
 		add(textDisplayArea, getTextDisplayConstraints());
 		add(typingFld, getLowerConstraints(0, 1));

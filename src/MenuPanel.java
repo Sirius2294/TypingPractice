@@ -16,7 +16,7 @@ public class MenuPanel extends JPanel {
 	public MenuPanel() {
 		setLayout(new GridBagLayout());
 		
-		font = new Font("Sansserif", Font.PLAIN, 20);
+		font = new Font("Sansserif", Font.PLAIN, 25);
 		
 		titleLbl = new JLabel("Type-Machina");
 		titleLbl.setFont(font);
