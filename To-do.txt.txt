@@ -1,0 +1,4 @@
+-Save progress in a certain section
+-Add randomized quotes in section
+-Webcrawler for wikipedia intros
+-buttons for wikipedia intros

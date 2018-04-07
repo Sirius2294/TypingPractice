@@ -17,7 +17,6 @@ def fill_list(url):
 
 def get_sentences(text="", num_of_sentences=2):
     num_of_periods = 0
-    # sentences = ""
     for i in range(len(text)):
         if text[i] == '.':
             num_of_periods += 1
@@ -55,6 +54,7 @@ def compile_into_string(paragraphs=[]):
     text = text.replace("\n", "")
     text = text.replace("’", "'")
     text = text.replace("−", "-")
+    text = text.replace("—", "-")
     return text.strip()
 
 

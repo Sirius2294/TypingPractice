@@ -1,2 +1,5 @@
-test 0
-duelyst 0
+
+test 2 0
+
+duelyst 340 
+wikipedia 15 0

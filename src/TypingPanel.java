@@ -144,6 +144,7 @@ public class TypingPanel extends Panel{
 							
 							if(numCorrect == currentText.length()) {
 								textDisplayArea.setBackground(Color.GREEN);
+								manager.saveProgress();
 								break;
 							}
 						}

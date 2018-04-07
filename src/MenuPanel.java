@@ -41,6 +41,7 @@ public class MenuPanel extends Panel {
 		add(quitBtn);
 	}
 	
+	//sets the content of the frame to a PlayPanel object
 	private class PlayButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent event) {
@@ -48,6 +49,7 @@ public class MenuPanel extends Panel {
 		}
 	}
 	
+	//sets the content of the frame to an UpdatePanel object
 	private class updateButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent event) {
@@ -55,6 +57,7 @@ public class MenuPanel extends Panel {
 		}
 	}
 	
+	//exits the program
 	private class QuitButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent event) {

@@ -15,7 +15,7 @@ public class UpdatePanel extends Panel {
 	private Font font;
 	
 	public UpdatePanel() {
-		setLayout(new GridLayout(3, 1));
+		setLayout(new GridLayout(4, 1));
 		
 		font = new Font("Sansserif", Font.PLAIN, 30);
 		
@@ -23,8 +23,9 @@ public class UpdatePanel extends Panel {
 		titleLbl.setFont(font);
 		add(titleLbl);
 		
-		updateBtns = new JButton[1];
+		updateBtns = new JButton[2];
 		updateBtns[0] = new JButton("Duelyst");
+		updateBtns[1] = new JButton("Wikipedia");
 		for(int x = 0; x < updateBtns.length; x++) {
 			updateBtns[x].setFont(font);
 			updateBtns[x].addActionListener(new UpdateListener(updateBtns[x].getText()));

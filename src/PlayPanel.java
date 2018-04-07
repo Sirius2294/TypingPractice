@@ -13,15 +13,16 @@ public class PlayPanel extends Panel {
 	private JButton menuBtn;
 	
 	public PlayPanel() {
-		setLayout(new GridLayout(4, 1));
+		setLayout(new GridLayout(5, 1));
 		
 		titleLbl = new JLabel("Select what you would like to type");
 		titleLbl.setFont(normalFont);
 		add(titleLbl);
 		
-		playBtns = new JButton[2];
+		playBtns = new JButton[3];
 		playBtns[0] = new JButton("Test");
 		playBtns[1] = new JButton("Duelyst");
+		playBtns[2] = new JButton("Wikipedia");
 		for(int x = 0; x < playBtns.length; x++) {
 			playBtns[x].setFont(normalFont);
 			playBtns[x].addActionListener(new PlayListener(playBtns[x].getText()));
